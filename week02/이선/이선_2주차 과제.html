@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>비정형데이터/정형데이터</title><meta name="data-notion-page-icon" content="🖤"/><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%96%A4%3C%2Ftext%3E%3C%2Fsvg%3E"/><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="626ebedc-da9b-838f-905f-81e7351c3eea" class="page sans" data-notion-page-icon="🖤"><header><div class="page-header-icon undefined"><span class="icon" data-emoji="🖤"></span></div><h1 class="page-title" dir="auto">비정형데이터/정형데이터</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/clock_gray.svg" style="width:14px;height:14px;display:block"/></span>작성일시</th><td><time datetime="2026-09-28T17:41">2026년 9월 28일 오후 5:41</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>O/X</th><td><input type="checkbox" class="checkbox checkbox-off" disabled=""/></td></tr></tbody></table></header><div class="page-body"><nav id="5b39900c-6c38-4d96-8f44-f36716788564" class="block-color-blue table_of_contents" data-notion-highlight="blue" data-notion-toc="" dir="ltr"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3eaebedc-da9b-80fe-a7ec-c11f171fd3a5">데이터</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#57aebedc-da9b-8382-b9ee-819935e5e5fa">데이터 종류</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#81eebedc-da9b-8237-9bf0-812dd11cb4ad"><strong>정형 데이터</strong><mark class="highlight-gray" data-notion-highlight="gray"><em>(Structured Data)</em></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3eaebedc-da9b-8037-a3c4-f98d92aa45bf">특징</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3eaebedc-da9b-8034-a3f7-ddc7a2a61ba0"><strong>비정형 데이터</strong><mark class="highlight-gray" data-notion-highlight="gray"><em>(Unstructured Data)</em></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3eaebedc-da9b-8043-b4e1-e1d7a1730814">특징</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8cfebedc-da9b-82af-981f-81d8f430d8db">데이터 형태별 저장 및 관리 기술</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1aeebedc-da9b-8309-ab24-817b0f2d8607">RDBMS (관계형 데이터베이스 관리시스템)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c8aebedc-da9b-8390-bbc6-017718aaea15">NoSQL (비관계형 데이터베이스)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e3debedc-da9b-8299-b0ce-01470120cb8f">데이터 레이크 (Data Lake) 및 오브젝트 스토리지</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#41bebedc-da9b-82b3-86cd-0109389e88fd">비정형 데이터의 정형화 및 전처리</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3eaebedc-da9b-8090-99ba-cccbe742e71c">텍스트 전처리</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3eaebedc-da9b-80d0-bd5f-fe541f424b3f">이미지/음성 전처리</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3eaebedc-da9b-807f-a5a2-c959d34e8f92">백터 임베딩</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f32a5faa-cf18-411d-a39e-cf6375945854">비정형 데이터 분석 핵심 기술</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e2df2d91-cd21-4428-891d-aed2dbdb644d">자연어 처리 (NLP - Natural Language Processing)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7d8e31f0-3615-433e-aead-bfaff6388a03">컴퓨터 비전 (Computer Vision)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d3e86b02-7290-4f49-a49f-2f4a026f1dec">멀티모달 AI (Multimodal AI)</a></div></nav><h1 id="3eaebedc-da9b-80fe-a7ec-c11f171fd3a5" class="block-color-blue" data-notion-highlight="blue" dir="auto">데이터</h1><aside class="block-color-blue_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="blue_background" style="white-space:pre-wrap;display:flex" id="539f42cc-db5e-41e9-b707-89bcc51c2ce9" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%"><p id="41b1e2ec-535f-40c9-afe0-b7c232021c99" class="" dir="auto">데이터</p><ul id="d4149ec1-6276-411f-be4b-3f5c69012742" class="bulleted-list" dir="auto"><li style="list-style-type:disc">현실 세계에서 단순히 관찰하거나 측정하여 수집한 사실이나 값</li></ul><ul id="4084de94-bec5-4275-adba-42cc134271bc" class="bulleted-list" dir="auto"><li style="list-style-type:disc">의미가 부여되지 않은 객관적 사실 </li></ul><ul id="393a4c1d-fe61-4aac-9868-8bb7cf0b6ec5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">가공하기 전 순수한 수치나 기호 자체</li></ul></div></aside><blockquote id="3eaebedc-da9b-80e4-9d9b-e064de31addd" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">EX) 회원의 가입 내역, 대리점의 매출내역, 회원의 시스템 로그인 시간 등</blockquote><h2 id="57aebedc-da9b-8382-b9ee-819935e5e5fa" class="block-color-purple_background" data-notion-highlight="purple_background" dir="auto">데이터 종류</h2><table id="9fd4aba1-9681-446e-957c-cadb68739822" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="d297a6aa-60e5-4c36-ba71-42c89a61d500" dir="ltr"><th id="LoCM" class="block-color-blue_background simple-table-header">구분</th><th id="vKjF" class="block-color-blue_background simple-table-header">정형 데이터 (Structured Data)</th><th id="VZ`g" class="block-color-blue_background simple-table-header">비정형 데이터 (Unstructured Data)</th></tr></thead><tbody><tr id="a65427e4-c4e4-4c9a-976f-fd8c783fddfc" dir="ltr"><td id="LoCM" class="">정의</td><td id="vKjF" class="">정해진 규칙과 형식(행과 열)에 맞춰 저장된 데이터</td><td id="VZ`g" class="">일정한 규칙이나 형태 없이 저장된 데이터</td></tr><tr id="887b2594-3736-4b92-8ef1-6956dc8b7bb3" dir="ltr"><td id="LoCM" class="">비율</td><td id="vKjF" class="">전체 생성 데이터의 약 20%</td><td id="VZ`g" class="">전체 생성 데이터의 약 80% 이상</td></tr><tr id="ddff6c26-8934-41aa-bf05-ba784f98bbcf" dir="ltr"><td id="LoCM" class="">저장 위치</td><td id="vKjF" class="">관계형 데이터베이스(RDBMS), 데이터 웨어하우스</td><td id="VZ`g" class="">데이터 레이크(Data Lake), NoSQL 저장소</td></tr><tr id="6e0188fb-1ccd-40a1-b530-e91a5dcd5a0f" dir="ltr"><td id="LoCM" class="">분석 방법</td><td id="vKjF" class="">SQL 등의 언어로 쉽고 빠르게 검색 및 연산 가능</td><td id="VZ`g" class="">텍스트 마이닝, 컴퓨터 비전, 자연어 처리(NLP) 등 AI 기술 필요</td></tr><tr id="9eb3dfc1-19b6-4f2d-a290-5fa9d8576dc6" dir="ltr"><td id="LoCM" class="">대표적인 예</td><td id="vKjF" class="">엑셀 스프레드시트, 은행 거래 내역, 고객 주소록</td><td id="VZ`g" class="">이미지, 유튜브 동영상, 오디오, SNS 게시글, 이메일 본문</td></tr></tbody></table><h2 id="81eebedc-da9b-8237-9bf0-812dd11cb4ad" class="block-color-purple_background" data-notion-highlight="purple_background" dir="auto"><strong>정형 데이터</strong><mark class="highlight-gray" data-notion-highlight="gray"><em>(Structured Data)</em></mark></h2><p id="3eaebedc-da9b-8086-aa3f-cec5d4040697" class="" dir="auto">미리 정해둔 형식과 구조(스키마)에 따라 체계적으로 저장되는 데이터</p><h3 id="3eaebedc-da9b-8037-a3c4-f98d92aa45bf" class="block-color-gray" data-notion-highlight="gray" dir="auto">특징</h3><ul id="3eaebedc-da9b-8084-b422-e0b5679e4236" class="bulleted-list" dir="auto"><li style="list-style-type:disc">높은 안정성, 유연하지 못한 구조</li></ul><ul id="3eaebedc-da9b-8092-964d-c1025860c1f0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">금융, 제조 등 대부분 기업의 업무용 데이터베이스</li></ul><aside class="block-color-blue_background callout" data-notion-callout="" data-notion-callout-icon="✅" data-notion-callout-background="blue_background" style="white-space:pre-wrap;display:flex" id="14fb543b-b3cc-4043-a0ee-7864a6cc0c98" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="✅"></span></div><div style="width:100%"><p id="06d82d0e-81bb-422d-b749-0c6e221fec01" class="" dir="auto">장점: 데이터의 구조가 명확하여 컴퓨터가 읽기 쉬움⇒검색, 정렬, 통계 분석, 수정에 용이</p></div></aside><h2 id="3eaebedc-da9b-8034-a3f7-ddc7a2a61ba0" class="block-color-purple_background" data-notion-highlight="purple_background" dir="auto"><strong>비정형 데이터</strong><mark class="highlight-gray" data-notion-highlight="gray"><em>(Unstructured Data)</em></mark></h2><p id="219ebedc-da9b-83fc-888d-81f8e1eae23c" class="" dir="auto">형태와 구조가 정해져 있지 않은 자유로운 형태의 데이터, 가장 큰 비중을 차지</p><h3 id="3eaebedc-da9b-8043-b4e1-e1d7a1730814" class="block-color-gray" data-notion-highlight="gray" dir="auto">특징</h3><p id="6d5ebedc-da9b-8374-a254-81cdd2a7b789" class="" dir="auto">파일의 크기가 크고 형태가 다양해서 전통적인 행과 열 형태의 데이터베이스에는 바로 저장할 수 없음</p><h2 id="8cfebedc-da9b-82af-981f-81d8f430d8db" class="block-color-purple_background" data-notion-highlight="purple_background" dir="auto">데이터 형태별 저장 및 관리 기술</h2><details open="" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><h3 id="1aeebedc-da9b-8309-ab24-817b0f2d8607" style="display:inline-block">RDBMS (관계형 데이터베이스 관리시스템)</h3></summary><div class="indented"><p id="1cfebedc-da9b-8361-af23-81d69714e0df" class="block-color-gray" data-notion-highlight="gray" dir="auto">적용: 정형 데이터</p><p id="3eaebedc-da9b-8038-b115-f4805dfbbd3f" class="" dir="auto">특징: Oracle, MySQL, PostgreSQL 등 정형 데이터의 무결성과 트랜잭션(ACID) 처리에 최적화되어 있다. </p></div></details><details open="" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><h3 id="c8aebedc-da9b-8390-bbc6-017718aaea15" style="display:inline-block">NoSQL (비관계형 데이터베이스)</h3></summary><div class="indented"><p id="3eaebedc-da9b-8081-a4f7-fe96448f51c4" class="block-color-gray" data-notion-highlight="gray" dir="auto">적용: 반정형 데이터 및 일부 비정형 데이터</p><p id="6f4ebedc-da9b-836d-a67b-816d6438d138" class="" dir="auto">특징: MongoDB, Redis, Cassandra 등 고정된 스키마 없이 Document, Key-Value 형태로 저장하며, 대용량 데이터의 수평적 확장에 유리하다</p></div></details><details open="" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><h3 id="e3debedc-da9b-8299-b0ce-01470120cb8f" style="display:inline-block">데이터 레이크 (Data Lake) 및 오브젝트 스토리지</h3></summary><div class="indented"><p id="1557635a-8612-4b9e-b9c0-db632fb3ffac" class="" dir="auto">적용: 정형, 반정형, 비정형 데이터 전체</p><p id="183bd380-fef4-49a3-8415-7c2a16454049" class="" dir="auto">특징: AWS S3, Google Cloud Storage, Hadoop HDFS 등 가공되지 않은 대규모 원천 데이터를 저렴한 비용으로 수집해 두고, 분석이 필요한 시점에 구조화하여 활용</p></div></details><h2 id="41bebedc-da9b-82b3-86cd-0109389e88fd" class="block-color-purple_background" data-notion-highlight="purple_background" dir="auto">비정형 데이터의 정형화 및 전처리</h2><p id="3eaebedc-da9b-809f-9790-f11f5b24df5d" class="" dir="auto">비정형 데이터를 머신러닝이나 통계 모델에서 활용하려면 수치 형태나 정형화된 구조로 변환해야 함</p><h3 id="3eaebedc-da9b-8090-99ba-cccbe742e71c" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">텍스트 전처리</h3><ul id="3eaebedc-da9b-8076-8c95-d6937df9e8a0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">정제 및 정규화: 소문자 변환, 특수문자 및 노이즈 제거, 불용어 제거</li></ul><ul id="3eaebedc-da9b-80a4-8b45-fb09e062cf6c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">토큰화: 문장을 단어, 형태소, 서브워드 단위로 분할</li></ul><ul id="3eaebedc-da9b-80ab-8508-de2659364013" class="bulleted-list" dir="auto"><li style="list-style-type:disc">표제어 추출: 단어의 기본 원형을 복원하여 데이터 차원 축소</li></ul><h3 id="3eaebedc-da9b-80d0-bd5f-fe541f424b3f" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">이미지/음성 전처리</h3><ul id="9cbebedc-da9b-8314-91a9-01c9f0196eb9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이미지: 크기 정규화, 채널 변환, 노이즈 제거, 데이터 증대</li></ul><ul id="3eaebedc-da9b-806e-9a25-dae7d54476a5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">음성: 음파를 주파수 영역으로 변환하여 스펙트로그램 형태의 2차원 시각적 데이터로 변환</li></ul><h3 id="3eaebedc-da9b-807f-a5a2-c959d34e8f92" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">백터 임베딩</h3><ul id="3eaebedc-da9b-8065-9848-cf1e84e7aadc" class="bulleted-list" dir="auto"><li style="list-style-type:disc">고차원의 비정형 데이터(단어, 문장, 이미지)를 의미적 관계를 유지한 채 머신러닝이 연산할 수 있는 연속된 수치 벡터로 변환</li></ul><ul id="ba5ebedc-da9b-82d6-a070-81125c86e502" class="bulleted-list" dir="auto"><li style="list-style-type:disc">변환된 벡터 간의 거리를 계산하여 비정형 데이터 간의 의미적 유사성을 파악</li></ul><h2 id="f32a5faa-cf18-411d-a39e-cf6375945854" class="block-color-purple_background" data-notion-highlight="purple_background" dir="auto">비정형 데이터 분석 핵심 기술</h2><h3 id="e2df2d91-cd21-4428-891d-aed2dbdb644d" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">자연어 처리 (NLP - Natural Language Processing)</h3><ul id="f1a61ce7-ae7f-4c0c-8946-057f214547d8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">주요 분야: 텍스트 분류, 문서 요약, 기계 번역, 정보 추출, 질의 응답</li></ul><ul id="5483aa09-1cfb-4f47-bfd9-95af3c8b1e6e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">대표 모델: Transformer 아키텍처 기반의 대규모 언어 모델 (LLM, GPT, BERT 등)</li></ul><h3 id="7d8e31f0-3615-433e-aead-bfaff6388a03" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">컴퓨터 비전 (Computer Vision)</h3><ul id="75847f16-e6cc-4275-931a-cff6b0acac2a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">주요 분야: 이미지 분류, 객체 탐지, 영역 분할, OCR(광학 문자 인식)</li></ul><ul id="ed31fefa-008f-467a-a647-35409b7ec8b0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">대표 모델: CNN(Convolutional Neural Network), VisionTransformer(ViT)</li></ul><h3 id="d3e86b02-7290-4f49-a49f-2f4a026f1dec" class="block-color-blue_background" data-notion-highlight="blue_background" dir="auto">멀티모달 AI (Multimodal AI)</h3><p id="c0f0882b-791f-4378-85d6-1fdea0e4af62" class="" dir="auto">텍스트, 이미지, 음성 등 서로 다른 형태의 비정형 데이터를 하나의 모델 내에서 통합적로 이해하고 연계하는 기술</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
