@@ -507,5 +507,3 @@ A. 없다. 군집 번호는 임의의 레이블이다.
    <https://scikit-learn.org/stable/common_pitfalls.html>
 5. scikit-learn User Guide, **Preprocessing data** — 표준화와 인코딩 등 데이터 변환.  
    <https://scikit-learn.org/stable/modules/preprocessing.html>
-
-*이 문서는 수업·동아리 학습을 위한 이론 정리이며, 예시로 제시한 분석 결과는 실제 데이터로 계산한 수치가 아니다.*
